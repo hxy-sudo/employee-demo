@@ -1,0 +1,237 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 导入字体 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* 阴影变量 - 用于卡片样式 */
+:root {
+  --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --card-shadow-dark: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+  --card-shadow-hover-dark: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.14);
+}
+
+/* 基础样式 */
+body {
+  margin: 0;
+  font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-gradient-to-br from-gray-50 to-gray-100 text-gray-900 dark:from-gray-900 dark:to-gray-800 dark:text-gray-100 min-h-screen;
+}
+
+/* 卡片样式 */
+.card {
+  @apply bg-white dark:bg-gray-800 rounded-xl overflow-hidden transition-all duration-300 border border-gray-100 dark:border-gray-700;
+  box-shadow: var(--card-shadow);
+  position: relative;
+}
+
+/* 卡片顶部渐变条 - 悬停时显示 */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  @apply bg-gradient-to-r from-primary-500 to-secondary-500;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+/* 悬停效果 */
+.card:hover {
+  box-shadow: var(--card-shadow-hover);
+  @apply dark:shadow-lg dark:shadow-gray-900/30 transform translate-y-[-2px];
+}
+
+/* 黑暗模式下的卡片 */
+.dark .card {
+  box-shadow: var(--card-shadow-dark);
+}
+
+.dark .card:hover {
+  box-shadow: var(--card-shadow-hover-dark);
+}
+
+/* 区域标题样式 */
+.section-title {
+  @apply text-xl font-bold mb-6 text-gray-800 dark:text-gray-200 relative inline-block;
+  padding-bottom: 0.5rem;
+}
+
+/* 标题下划线 */
+.section-title::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px; /* TODO: 调整为响应式宽度 */
+  height: 3px;
+  @apply bg-primary-500;
+}
+
+/* 按钮基础样式 */
+.btn {
+  @apply px-5 py-2.5 rounded-lg font-medium transition-all duration-300 transform focus:outline-none focus:ring-2 focus:ring-opacity-50;
+}
+
+/* 主要按钮 */
+.btn-primary {
+  @apply bg-gradient-to-r from-primary-500 to-primary-600 text-white hover:from-primary-600 hover:to-primary-700 focus:ring-primary-500 shadow-md shadow-primary-500/20 hover:shadow-lg hover:shadow-primary-500/30;
+}
+
+/* 次要按钮 */
+.btn-secondary {
+  @apply bg-gradient-to-r from-secondary-500 to-secondary-600 text-white hover:from-secondary-600 hover:to-secondary-700 focus:ring-secondary-500 shadow-md shadow-secondary-500/20 hover:shadow-lg hover:shadow-secondary-500/30;
+}
+
+/* 边框按钮 */
+.btn-outline {
+  @apply border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 focus:ring-gray-500;
+}
+
+/* 动画效果 - 滑入 */
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideInUp 0.6s ease forwards;
+  /* 不同浏览器前缀 - 可能不再需要但保留兼容性 */
+  -webkit-animation: slideInUp 0.6s ease forwards;
+  -moz-animation: slideInUp 0.6s ease forwards;
+}
+
+/* Firefox 修复 */
+@-moz-document url-prefix() {
+  .animate-slide-in {
+    animation-duration: 0.65s; /* 略微调整Firefox的动画时间 */
+  }
+}
+
+/* 技能条样式 */
+.skill-bar {
+  @apply relative h-3 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700;
+}
+
+.skill-bar-fill {
+  @apply absolute top-0 left-0 h-full rounded-full bg-gradient-to-r from-primary-400 to-primary-600;
+  transition: width 1s ease;
+}
+
+/* 标签样式 */
+.badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r transition-all duration-300;
+}
+
+.badge-blue {
+  @apply from-blue-500 to-blue-600 text-white;
+}
+
+.badge-green {
+  @apply from-green-500 to-green-600 text-white;
+}
+
+.badge-pink {
+  @apply from-pink-500 to-pink-600 text-white;
+}
+
+/* 个人资料卡片特效 */
+.profile-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-cover {
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-cover img {
+  transition: transform 0.5s ease;
+}
+
+/* 图片放大效果 - IE11可能不支持 */
+.profile-card:hover .profile-cover img {
+  transform: scale(1.05);
+}
+
+.profile-avatar {
+  @apply border-4 border-white dark:border-gray-800 shadow-xl;
+  transition: transform 0.3s ease;
+}
+
+.profile-card:hover .profile-avatar {
+  transform: scale(1.05);
+}
+
+/* IE11 兼容性补丁 - 一般情况下可以移除 */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .profile-card:hover .profile-cover img,
+  .profile-card:hover .profile-avatar {
+    /* IE doesn't support transform: scale properly */
+    transform: none;
+  }
+}
+
+/* 工作时间线样式增强 */
+.timeline-dot {
+  @apply w-4 h-4 rounded-full border-2 border-white dark:border-gray-800 z-10;
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+  transition: all 0.3s ease;
+}
+
+.timeline-dot:hover {
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.3);
+  transform: scale(1.2);
+}
+
+/* 项目卡片动画 */
+.project-card {
+  @apply overflow-hidden rounded-xl transition-all duration-300;
+}
+
+.project-card img {
+  transition: transform 0.5s ease;
+}
+
+.project-card:hover img {
+  transform: scale(1.08);
+}
+
+/*
+ * 临时修复Safari中的一些渲染问题
+ * TODO: 重新测试是否仍需要这些修复
+ */
+@media not all and (min-resolution:.001dpcm) {
+  @supports (-webkit-appearance:none) and (stroke-color:transparent) {
+    .card {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+    }
+
+    .animate-slide-in {
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
+    }
+  }
+} 
